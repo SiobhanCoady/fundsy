@@ -3,13 +3,10 @@ class CampaignsController < ApplicationController
 
   def new
     @campaign = Campaign.new
+    3.times { @campaign.rewards.build }
   end
 
   def create
-    campaign_params = params.require(:campaign).permit(:title,
-                                                       :body,
-                                                       :goal,
-                                                       :end_date)
     @campaign = Campaign.new campaign_params
     @campaign.user = current_user
     if @campaign.save
@@ -17,6 +14,10 @@ class CampaignsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def show
+    @campaign = Campaign.find params[:id]
   end
 
   def edit
@@ -27,5 +28,21 @@ class CampaignsController < ApplicationController
   def destroy
     campaign = Campaign.find params[:id]
     campaign.destroy
+  end
+
+  private
+
+  def campaign_params
+    params.require(:campaign).permit(:title,
+                                     :body,
+                                     :goal,
+                                     :end_date,
+                                     { rewards_attributes: [ :title,
+                                                             :body,
+                                                             :amount,
+                                                             :id,
+                                                             :_destroy
+                                                             ]
+                                      })
   end
 end

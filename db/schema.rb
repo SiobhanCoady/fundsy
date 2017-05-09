@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413161911) do
+ActiveRecord::Schema.define(version: 20170509203257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20170413161911) do
     t.index ["user_id"], name: "index_campaigns_on_user_id", using: :btree
   end
 
+  create_table "rewards", force: :cascade do |t|
+    t.string   "title"
+    t.text     "body"
+    t.integer  "amount"
+    t.integer  "campaign_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["campaign_id"], name: "index_rewards_on_campaign_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -36,4 +46,5 @@ ActiveRecord::Schema.define(version: 20170413161911) do
   end
 
   add_foreign_key "campaigns", "users"
+  add_foreign_key "rewards", "campaigns"
 end
