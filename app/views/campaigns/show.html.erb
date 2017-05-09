@@ -4,6 +4,10 @@
 <p>Goal: <%= number_to_currency @campaign.goal %></p>
 <p>End Date: <%= @campaign.end_date %></p>
 
+<% if @campaign.may_publish? %>
+  <%= link_to 'Publish', campaign_publishings_path(@campaign), method: :post %>
+<% end %>
+
 <% @campaign.rewards.each do |reward| %>
   <div class="well col-md-4">
     <h3><%= reward.title %></h3>

@@ -14,4 +14,35 @@ class Campaign < ApplicationRecord
 
   belongs_to :user, optional: true
   validates :title, presence: true, uniqueness: true
+
+  include AASM
+
+  aasm whiny_transitions: false do
+    state :draft, initial: true
+    state :published
+    state :cancelled
+    state :funded
+    state :unfunded
+
+    event :publish do
+      transitions from: :draft, to: :published
+    end
+
+    event :fund do
+      transitions from: :published, to: :funded
+    end
+
+    event :unfund do
+      transitions from: :published, to: :unfunded
+    end
+
+    event :cancel do
+      transitions from: [:published, :funded], to: :cancelled
+    end
+
+    event :relaunch do
+      transitions from: :cancelled, to: :draft
+    end
+
+  end
 end
