@@ -8,10 +8,34 @@
   <%= link_to 'Publish', campaign_publishings_path(@campaign), method: :post %>
 <% end %>
 
+<% if @campaign.has_map? %>
+  <div style='width: 800px;'>
+    <div id="map" style='width: 800px; height: 400px;'></div>
+  </div>
+<% end %>
+
 <% @campaign.rewards.each do |reward| %>
   <div class="well col-md-4">
     <h3><%= reward.title %></h3>
     <p><%= reward.body %></p>
     <p><%= number_to_currency reward.amount %></p>
   </div>
+<% end %>
+
+<% if @campaign.has_map? %>
+  <script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers([
+      {
+        "lat": <%= @campaign.latitude %>,
+        "lng": <%= @campaign.longitude %>,
+        "infowindow": '<%= @campaign.title %>'
+      }
+    ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    handler.getMap().setZoom(17);
+    });
+  </script>
 <% end %>

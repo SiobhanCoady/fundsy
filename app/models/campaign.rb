@@ -15,6 +15,14 @@ class Campaign < ApplicationRecord
   belongs_to :user, optional: true
   validates :title, presence: true, uniqueness: true
 
+  geocoded_by :address
+  after_validation :geocode # this will make an HTTP request to Google to get
+                            # the coordinates for the address
+
+  def has_map?
+    longitude.present? && latitude.present?
+  end
+
   include AASM
 
   aasm whiny_transitions: false do
