@@ -39,6 +39,9 @@ gem 'aasm'
 gem 'geocoder'
 gem 'gmaps4rails'
 
+gem 'devise'
+gem 'activeadmin', github: 'activeadmin'
+
 gem 'underscore-rails'
 
 # Use Capistrano for deployment
