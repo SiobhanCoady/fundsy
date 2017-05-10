@@ -6,11 +6,11 @@ class Campaign < ApplicationRecord
   accepts_nested_attributes_for :rewards, reject_if: :all_blank,
                                           allow_destroy: true
 
-  validates :rewards, length: {
-                                minimum: 2,
-                                maximum: 10,
-                                message: 'Please supply 2 to 10 rewards'
-                               }
+  # validates :rewards, length: {
+  #                               minimum: 2,
+  #                               maximum: 10,
+  #                               message: 'Please supply 2 to 10 rewards'
+  #                              }
 
   belongs_to :user, optional: true
   validates :title, presence: true, uniqueness: true

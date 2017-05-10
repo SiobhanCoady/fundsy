@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     resources :publishings, only: :create
   end
 
+  resources :nearby_campaigns, only: :index
+
   resources :users, only: [:new, :create]
 
   resources :sessions, only: [:new, :create] do
