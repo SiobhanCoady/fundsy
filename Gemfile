@@ -36,6 +36,8 @@ gem 'bootstrap-sass'
 gem 'cocoon'
 gem 'aasm'
 
+gem 'stripe'
+
 gem 'geocoder'
 gem 'gmaps4rails'
 

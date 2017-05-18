@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518202431) do
+ActiveRecord::Schema.define(version: 20170518222722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,8 +65,9 @@ ActiveRecord::Schema.define(version: 20170518202431) do
     t.integer  "amount"
     t.integer  "campaign_id"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "stripe_charge_id"
     t.index ["campaign_id"], name: "index_pledges_on_campaign_id", using: :btree
     t.index ["user_id"], name: "index_pledges_on_user_id", using: :btree
   end
@@ -86,8 +87,12 @@ ActiveRecord::Schema.define(version: 20170518202431) do
     t.string   "last_name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "stripe_customer_id"
+    t.string   "stripe_card_brand"
+    t.string   "stripe_last4"
+    t.string   "stripe_card_expiry"
   end
 
   add_foreign_key "campaigns", "users"

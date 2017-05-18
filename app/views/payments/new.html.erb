@@ -1,1 +1,28 @@
 <h1>Make a Payment</h1>
+
+<%# This form is for us to submit the Stripe token we got from the Stripe js
+API to our payments#create, so we can charge the user on the server side. %>
+<%= form_tag pledge_payments_path(@pledge), id: 'server-form' do %>
+  <%= hidden_field_tag :stripe_token %>
+<% end %>
+
+<%# The form below is used to send credit card info to the Stripe server using
+the Stripe JS API in order to acquire the Stripe Token (one-time use token). %>
+<div id="stripe-error"></div>
+<%= form_tag '', id: 'cc-form' do %>
+  <div class="form-group">
+    <%= label_tag :card_number %>
+    <%= text_field_tag :card_number, '', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :card_expiry %>
+    <%= select_month Date.today, { add_month_numbers: true }, { class: 'form-control' } %>
+    <%= select_year Date.today, { start_year: Date.today.year, end_year: Date.today.year + 10 },
+                                { class: 'form-control' } %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :cvc %>
+    <%= text_field_tag :cvc, '', class: 'form-control' %>
+  </div>
+  <%= submit_tag 'Make Payment', class: 'btn btn-primary' %>
+<% end %>
