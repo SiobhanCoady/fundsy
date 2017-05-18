@@ -1,5 +1,6 @@
 class Campaign < ApplicationRecord
   has_many :rewards, dependent: :destroy
+  has_many :pledges, dependent: :nullify
 
   # reject_if: :all_blank will ignore any associated rewards attributes if they
   # are all blank (meaning user didn't enter anything in the fields)

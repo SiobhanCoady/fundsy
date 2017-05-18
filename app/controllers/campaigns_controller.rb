@@ -18,6 +18,7 @@ class CampaignsController < ApplicationController
 
   def show
     @campaign = Campaign.find params[:id]
+    @pledge = Pledge.new
   end
 
   def edit
